@@ -231,16 +231,12 @@ function encodeToRot13(str) {
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
     'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
   ];
-  let arrDecrypt = str.split(' ');
-  let arrEncrypt = [];
-  arrDecrypt.forEach((word, index) => {
-    arrEncrypt[index] = [];
-    [...word].forEach(item => {arrDictionary[0].includes(item)? arrEncrypt[index].push(arrDictionary[1][arrDictionary[0].indexOf(item)] ): arrEncrypt[index].push(item);});
-
-  });
   let res = '';
-  arrEncrypt.forEach(item => res += item.join('')+ ' ');
-  return res.trim()
+  for (let i = 0; i < str.length; i++){
+    let chekDecrypt = arrDictionary[0].indexOf(str[i]);
+    res += (chekDecrypt != -1)? arrDictionary[1][chekDecrypt] : str[i];
+  }
+  return res;
 }
 
 /**
