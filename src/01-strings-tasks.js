@@ -66,8 +66,8 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-  let arr = value.split(' ');
-  return `${arr[1]} ${arr[2].slice(0, arr[2].length-1)}`;
+  const arr = value.split(' ');
+  return `${arr[1]} ${arr[2].slice(0, arr[2].length - 1)}`;
 }
 
 
@@ -128,9 +128,8 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-  let startSubstr = str.indexOf(value);
+  const startSubstr = str.indexOf(value);
   return str.slice(0, startSubstr) + str.slice(startSubstr + value.length);
-
 }
 
 /**
@@ -207,22 +206,29 @@ function extractEmails(str) {
  */
 function getRectangleString(width, height) {
   // let arrBorder = ['┌', '─', '┐', '│', '└', '┘'];
-  let arrBorder = [
+  const arrBorder = [
     ['┌', '─', '┐'],
     ['│', ' ', '│'],
-    ['└', '─', '┘']
+    ['└', '─', '┘'],
   ];
   let res = '';
-  for (let i = 0; i < height; i++){
-    for (let j = 0; j < width; j++){
-      if (i === 0){ // блок для верхней строки
-        res += (j === 0)? arrBorder[0][0] : (j === width-1)? arrBorder[0][2] : arrBorder[0][1];
+  for (let i = 0; i < height; i += 1) {
+    for (let j = 0; j < width; j += 1) {
+      if (i === 0) { // блок для верхней строки
+        // res += (j === 0)? arrBorder[0][0] : (j === width-1)? arrBorder[0][2] : arrBorder[0][1];
+        if (j === 0) { res += arrBorder[0][0]; }
+        if (j === width - 1) { res += arrBorder[0][2]; }
+        if (j > 0 && j < width - 1) { res += arrBorder[0][1]; }
       }
-      else if (i === height-1){ // блок для нижней строки
-        res += (j === 0)? arrBorder[2][0] : (j === width-1)? arrBorder[2][2] : arrBorder[2][1];
-      } 
-      else { // блок для остальных (средних строк)
-        res += (j === 0)? arrBorder[1][0] : (j === width-1)? arrBorder[1][2] : arrBorder[1][1];
+      if (i === height - 1) { // блок для нижней строки
+        if (j === 0) { res += arrBorder[2][0]; }
+        if (j === width - 1) { res += arrBorder[2][2]; }
+        if (j > 0 && j < width - 1) { res += arrBorder[2][1]; }
+      }
+      if (i > 0 && i < height - 1) { // блок для остальных (средних строк)
+        if (j === 0) { res += arrBorder[1][0]; }
+        if (j === width - 1) { res += arrBorder[1][2]; }
+        if (j > 0 && j < width - 1) { res += arrBorder[1][1]; }
       }
     }
     res += '\n';
@@ -248,14 +254,14 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-  let arrDictionary = [
+  const arrDictionary = [
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
-    'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
+    'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm',
   ];
   let res = '';
-  for (let i = 0; i < str.length; i++){
-    let chekDecrypt = arrDictionary[0].indexOf(str[i]);
-    res += (chekDecrypt != -1)? arrDictionary[1][chekDecrypt] : str[i];
+  for (let i = 0; i < str.length; i += 1) {
+    const chekDecrypt = arrDictionary[0].indexOf(str[i]);
+    res += (chekDecrypt !== -1) ? arrDictionary[1][chekDecrypt] : str[i];
   }
   return res;
 }
@@ -274,7 +280,7 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-  return typeof value === 'string' || Object.prototype.toString.call(value) === '[object String]'? true : false;
+  return !!(typeof value === 'string' || Object.prototype.toString.call(value) === '[object String]');
 }
 
 
@@ -303,11 +309,10 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-  let arrCards = 
-  ['A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣',
-   'A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦',
-   'A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥',
-   'A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠'];  
+  const arrCards = ['A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
+    'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+    'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥',
+    'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠'];
   return arrCards.indexOf(value);
 }
 
