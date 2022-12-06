@@ -226,8 +226,21 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  let arrDictionary = [
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+    'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
+  ];
+  let arrDecrypt = str.split(' ');
+  let arrEncrypt = [];
+  arrDecrypt.forEach((word, index) => {
+    arrEncrypt[index] = [];
+    [...word].forEach(item => {arrDictionary[0].includes(item)? arrEncrypt[index].push(arrDictionary[1][arrDictionary[0].indexOf(item)] ): arrEncrypt[index].push(item);});
+
+  });
+  let res = '';
+  arrEncrypt.forEach(item => res += item.join('')+ ' ');
+  return res.trim()
 }
 
 /**
@@ -244,7 +257,7 @@ function encodeToRot13(/* str */) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-  return typeof value === 'string'? true : false;
+  return typeof value === 'string' || Object.prototype.toString.call(value) === '[object String]'? true : false;
 }
 
 
