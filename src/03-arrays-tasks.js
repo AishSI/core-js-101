@@ -240,8 +240,7 @@ function toArrayOfSquares(arr) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
 */
 function getMovingSum(arr) {
-  let sum = 0;
-  return arr.map((item) => sum += item);
+  return arr.map((cur, i, ar) => ar.reduce((acc, it, ind) => acc + it * (ind <= i), 0));
 }
 
 /**
@@ -275,8 +274,8 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-  let res = arr.map((item, index) => new Array(index+1).fill(item));
-  return [].concat(...res);  
+  const res = arr.map((item, index) => new Array(index + 1).fill(item));
+  return [].concat(...res);
 }
 
 
@@ -312,7 +311,7 @@ function get3TopItems(arr) {
  *   [ 1, '2' ] => 1
  */
 function getPositivesCount(arr) {
-  return arr.filter(item => typeof item === 'number' && item > 0).length;
+  return arr.filter((item) => typeof item === 'number' && item > 0).length;
 }
 
 /**
@@ -330,7 +329,7 @@ function getPositivesCount(arr) {
  */
 function sortDigitNamesByNumericOrder(arr) {
   const nameNum = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
-  return arr.sort((a,b) => (nameNum.indexOf(a) - nameNum.indexOf(b)));
+  return arr.sort((a, b) => (nameNum.indexOf(a) - nameNum.indexOf(b)));
 }
 
 /**
@@ -362,7 +361,7 @@ function getItemsSum(arr) {
  *  [ null, undefined, NaN, false, 0, '' ]  => 6
  */
 function getFalsyValuesCount(arr) {
-  return arr.length - arr.filter(item => !!item).length;
+  return arr.length - arr.filter((item) => !!item).length;
 }
 
 /**
@@ -380,7 +379,7 @@ function getFalsyValuesCount(arr) {
  *    [ true, 0, 1, 'true' ], true => 1
  */
 function findAllOccurrences(arr, item) {
-  return arr.reduce((acc, cur) => acc + (cur === item? 1: 0), 0);
+  return arr.reduce((acc, cur) => acc + (cur === item ? 1 : 0), 0);
 }
 
 /**
@@ -395,7 +394,7 @@ function findAllOccurrences(arr, item) {
  *    ['rock', 'paper', 'scissors']     => 'rock,paper,scissors'
  */
 function toStringList(arr) {
-  return arr.join(',')
+  return arr.join(',');
 }
 
 
@@ -426,7 +425,7 @@ function toStringList(arr) {
  *    ]
  */
 function sortCitiesArray(arr) {
-  return arr.sort((a,b) => a['country'].localeCompare(b['country']) || a['city'].localeCompare(b['city']));
+  return arr.sort((a, b) => a.country.localeCompare(b.country) || a.city.localeCompare(b.city));
 }
 
 /**
@@ -448,7 +447,7 @@ function sortCitiesArray(arr) {
  *           [0,0,0,0,1]]
  */
 function getIdentityMatrix(n) {
-  let arrMantrix = Array(n).fill(Array(n).fill(0));
+  const arrMantrix = Array(n).fill(Array(n).fill(0));
   return arrMantrix.map((item, index) => item.map((el, i) => Number(i === index)));
 }
 
@@ -466,8 +465,8 @@ function getIdentityMatrix(n) {
  *     3, 3   => [ 3 ]
  */
 function getIntervalArray(start, end) {
-  let lenArray = end - start + 1;
-  let arr = Array(lenArray).fill(start);
+  const lenArray = end - start + 1;
+  const arr = Array(lenArray).fill(start);
   return arr.map((item, index) => item + index);
 }
 
@@ -517,15 +516,15 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group( array, keySelector, valueSelector ) {
+function group(array, keySelector, valueSelector) {
   return array.reduce((acc, item) => {
-    if (acc.get( keySelector(item))){
-      let arr = acc.get(keySelector(item))
+    if (acc.get(keySelector(item))) {
+      const arr = acc.get(keySelector(item));
       arr.push(valueSelector(item));
-      return acc.set( keySelector(item), arr);
+      return acc.set(keySelector(item), arr);
     }
     return acc.set(keySelector(item), [valueSelector(item)]);
-  }, new Map())
+  }, new Map());
 }
 
 
@@ -583,12 +582,12 @@ function getElementByIndexes(arr, indexes) {
  *
  */
 function swapHeadAndTail(arr) {
-  let lenArr = arr.length;
-  let halfLength = Math.floor(lenArr /2);
-  let leftHalf = arr.splice(0, halfLength)
-  let rightHalf = arr;
+  const lenArr = arr.length;
+  const halfLength = Math.floor(lenArr / 2);
+  const leftHalf = arr.splice(0, halfLength);
+  const rightHalf = arr;
 
-  if (lenArr%2) rightHalf.push(rightHalf.shift());  
+  if (lenArr % 2) rightHalf.push(rightHalf.shift());
   return rightHalf.concat(leftHalf);
 }
 
